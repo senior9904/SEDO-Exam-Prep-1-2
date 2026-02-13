@@ -2,12 +2,7 @@ pipeline{
     agent any
 
     stages{
-        stage('Checkout the code'){
-            steps{
-                git branch: "master", url: 'https://github.com/senior9904/SEDO-Exam-Prep-1-2.git'
-            }
-           
-        }
+       
         stage('Restore dependencies') {
             steps {
             // runs the dotnet restore command to download/restore the required dependencies of the .NET web app
@@ -28,3 +23,7 @@ pipeline{
     }
    
 }
+
+/*
+Configure Jenkins multibranch pipeline to build the application and execute all of the tests when changes are pushed to the feature and main branches
+ */
