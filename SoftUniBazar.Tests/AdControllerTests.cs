@@ -16,6 +16,7 @@ namespace SoftUniBazar.Tests
     [TestFixture]
     public class AdControllerTests
     {
+        // This is an example comment
         private BazarDbContext _dbContext;
         private AdController _controller;
 
