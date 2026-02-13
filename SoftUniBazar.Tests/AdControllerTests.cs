@@ -16,6 +16,7 @@ namespace SoftUniBazar.Tests
     [TestFixture]
     public class AdControllerTests
     {
+        // This is an example comment
         private BazarDbContext _dbContext;
         private AdController _controller;
 
@@ -53,6 +54,7 @@ namespace SoftUniBazar.Tests
         [TearDown]
         public void TearDown()
         {
+            _controller.Dispose();
             // Dispose of the in-memory database after each test
             _dbContext.Database.EnsureDeleted();
             _dbContext.Dispose();
@@ -66,12 +68,16 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var viewResult = result as ViewResult;
-            Assert.IsNotNull(viewResult); // Ensure the result is a ViewResult
+            //Assert.IsNotNull(viewResult); // Ensure the result is a ViewResult
+            Assert.That(viewResult, Is.Not.Null);
 
             var model = viewResult.Model as AdFormModel;
-            Assert.IsNotNull(model); // Ensure the model is of type AdFormModel
-            Assert.NotNull(model.Categories); // Ensure categories are not null
-            Assert.AreEqual(2, model.Categories.Count()); // Check if two categories exist
+            //Assert.IsNotNull(model); // Ensure the model is of type AdFormModel
+            Assert.That(model, Is.Not.Null);
+            // Assert.NotNull(model.Categories); // Ensure categories are not null
+            Assert.That(model.Categories, Is.Not.Null);
+           // Assert.AreEqual(2, model.Categories.Count()); // Check if two categories exist
+            Assert.That(model.Categories.Count(), Is.EqualTo(2));
         }
 
         [Test]
@@ -92,9 +98,12 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var redirectToActionResult = result as RedirectToActionResult;
-            Assert.IsNotNull(redirectToActionResult); // Ensure redirection
-            Assert.AreEqual("All", redirectToActionResult.ActionName);
-            Assert.AreEqual("Ad", redirectToActionResult.ControllerName);
+            //Assert.IsNotNull(redirectToActionResult); // Ensure redirection
+            Assert.That(redirectToActionResult, Is.Not.Null);
+            // Assert.AreEqual("All", redirectToActionResult.ActionName);
+            Assert.That(redirectToActionResult.ActionName, Is.EqualTo("All"));
+           // Assert.AreEqual("Ad", redirectToActionResult.ControllerName);
+            Assert.That(redirectToActionResult.ControllerName, Is.EqualTo("Ad"));
         }
 
         [Test]
@@ -120,11 +129,14 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var viewResult = result as ViewResult;
-            Assert.IsNotNull(viewResult);
+           // Assert.IsNotNull(viewResult);
+            Assert.That(viewResult, Is.Not.Null);
 
             var model = viewResult.Model as AdFormModel;
-            Assert.IsNotNull(model);
-            Assert.AreEqual("Test Ad", model.Name);
+            //Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
+            //Assert.AreEqual("Test Ad", model.Name);
+            Assert.That(model.Name, Is.EqualTo("Test Ad"));
         }
 
         [Test]
@@ -140,9 +152,12 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var redirectToActionResult = result as RedirectToActionResult;
-            Assert.IsNotNull(redirectToActionResult);
-            Assert.AreEqual("Cart", redirectToActionResult.ActionName);
-            Assert.AreEqual("Ad", redirectToActionResult.ControllerName);
+           // Assert.IsNotNull(redirectToActionResult);
+            Assert.That(redirectToActionResult, Is.Not.Null);
+           // Assert.AreEqual("Cart", redirectToActionResult.ActionName);
+            Assert.That(redirectToActionResult.ActionName, Is.EqualTo("Cart"));
+           // Assert.AreEqual("Ad", redirectToActionResult.ControllerName);
+            Assert.That(redirectToActionResult.ControllerName, Is.EqualTo("Ad"));
         }
     }
 }

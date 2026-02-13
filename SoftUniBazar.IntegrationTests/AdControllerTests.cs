@@ -53,6 +53,7 @@ namespace SoftUniBazar.Tests
         [TearDown]
         public void TearDown()
         {
+            _controller?.Dispose();
             // Clean up in-memory database after each test
             _dbContext.Database.EnsureDeleted();
             _dbContext.Dispose();
@@ -76,13 +77,17 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var redirectToActionResult = result as RedirectToActionResult;
-            Assert.IsNotNull(redirectToActionResult);
-            Assert.AreEqual("All", redirectToActionResult.ActionName);
+            //Assert.isNotNull(redirectToActionResult);
+            Assert.That(redirectToActionResult, Is.Not.Null);
+            //Assert.AreEqual("All", redirectToActionResult.ActionName);
+            Assert.That(redirectToActionResult.ActionName, Is.EqualTo("All"));
 
             // Verify the ad has been inserted into the database
             var adsInDb = _dbContext.Ads.ToList();
-            Assert.AreEqual(1, adsInDb.Count);  // Ensure one ad has been added
-            Assert.AreEqual("Integration Test Ad", adsInDb[0].Name);
+            //Assert.AreEqual(1, adsInDb.Count);  // Ensure one ad has been added
+            Assert.That(adsInDb.Count, Is.EqualTo(1));
+            //Assert.AreEqual("Integration Test Ad", adsInDb[0].Name);
+            Assert.That(adsInDb[0].Name, Is.EqualTo("Integration Test Ad"));
         }
 
         [Test]
@@ -118,15 +123,21 @@ namespace SoftUniBazar.Tests
 
             // Assert
             var redirectToActionResult = result as RedirectToActionResult;
-            Assert.IsNotNull(redirectToActionResult);
-            Assert.AreEqual("All", redirectToActionResult.ActionName);
+            //Assert.IsNotNull(redirectToActionResult);
+            Assert.That(redirectToActionResult, Is.Not.Null);
+           // Assert.AreEqual("All", redirectToActionResult.ActionName);
+            Assert.That(redirectToActionResult.ActionName, Is.EqualTo("All"));
 
             // Verify the ad has been updated in the database
             var updatedAd = await _dbContext.Ads.FindAsync(ad.Id);
-            Assert.AreEqual("Edited Ad", updatedAd.Name);
-            Assert.AreEqual("Edited Description", updatedAd.Description);
-            Assert.AreEqual(150, updatedAd.Price);
-            Assert.AreEqual("https://example.com/edited.jpg", updatedAd.ImageUrl);
+            // Assert.AreEqual("Edited Ad", updatedAd.Name);
+            Assert.That(updatedAd.Name, Is.EqualTo("Edited Ad"));
+            //Assert.AreEqual("Edited Description", updatedAd.Description);
+            Assert.That(updatedAd.Description, Is.EqualTo("Edited Description"));
+            //Assert.AreEqual(150, updatedAd.Price);
+            Assert.That(updatedAd.Price, Is.EqualTo(150));
+           // Assert.AreEqual("https://example.com/edited.jpg", updatedAd.ImageUrl);
+            Assert.That(updatedAd.ImageUrl, Is.EqualTo("https://example.com/edited.jpg"));
         }
     }
 }
